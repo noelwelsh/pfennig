@@ -12,4 +12,3 @@ resolvers ++= Seq(Resolver.sonatypeRepo("snapshots"), Resolver.sonatypeRepo("rel
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.7.1")
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0-M5" cross CrossVersion.full)
-
