@@ -14,7 +14,7 @@ final case class Enumeration[A](events: List[(A, Probability)]) {
     def pick(total: Probability, events: List[(A, Probability)]): A =
       events match {
         case (a, p) :: rest =>
-          if(total < weight && (total + p) < weight)
+          if(total < weight && weight < (total + p))
             a
           else
             pick(total + p, rest)
