@@ -15,12 +15,12 @@ object Prior {
       case Conditional(d, l) =>
         for {
           o <- weightedPrior(d)
-          val (x, weight) = o
+          (x, weight) = o
         } yield (x -> weight * l(x))
       case FlatMap(d, f) =>
         for {
           o <- weightedPrior(d)
-          val (x, weight) = o
+          (x, weight) = o
           y <- f(x)
         } yield (y -> weight)
       case other =>
