@@ -1,6 +1,6 @@
 val cats = "org.spire-math" %% "cats" % "0.4.0-SNAPSHOT"
 val scalaTest = "org.scalatest" %% "scalatest" % "2.2.4" % "test"
-val simulacrum = "com.github.mpilquist" %% "simulacrum" % "0.5.0"
+val simulacrum = "com.github.mpilquist" %% "simulacrum" % "0.7.0"
 
 scalaVersion := "2.11.7"
 
