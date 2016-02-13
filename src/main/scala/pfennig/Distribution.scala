@@ -43,5 +43,5 @@ object Distribution {
   }
 
   def bernoulli(weight: Probability): Distribution[Boolean] =
-    Primitive(Random.bernoulli(weight), Random.randomInstances)
+    Primitive(Random.bernoulli(weight), Random.sampleableInstance)
 }
