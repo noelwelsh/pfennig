@@ -41,6 +41,8 @@ object Random {
       get
   }
 
+  // Random algebraic data type----------------------------------------
+
   final case class Discrete[A](events: List[(A, Probability)]) extends Random[A] {
     def sample(randomness: Randomness): A = {
       val mass = (events map { case(a,p) => p }).sum
@@ -76,6 +78,8 @@ object Random {
     def sample(randomness: Randomness): Boolean =
       weight < randomness.nextDouble()
   }
+
+  // Type class instances----------------------------------------
 
   implicit object sampleableInstance extends Sampleable[Random] {
     override def sample[A](distribution: Random[A])(randomness: Randomness): A =
