@@ -2,9 +2,11 @@ package pfennig
 package free
 
 import cats.Comonad
+import cats.data.{NonEmptyList,OneAnd}
 import cats.free.Free
 import cats.arrow.NaturalTransformation
 import cats.std.function._
+import cats.std.list._
 import scala.language.higherKinds
 
 object distribution {
@@ -22,6 +24,14 @@ object distribution {
   final case class Primitive[F[_],A](distribution: F[A], sampleable: Sampleable[F]) extends Generator[A] {
     def sample(implicit randomness: Randomness): A =
       sampleable.sample(distribution)(randomness)
+  }
+
+  final case class Conditioned[A](likelihoods: NonEmptyList[Likelihood[A]], distribution: Distribution[A]) {
+    def condition(likelihood: Likelihood[A]): Conditioned[A] = {
+      this.copy(likelihoods =
+        OneAnd(likelihood, List.empty[Likelihood[A]]).combine(likelihoods)
+      )
+    }
   }
 
   /** Compile a Distribution to a function that, when applied, produces a sample. */
@@ -42,5 +52,8 @@ object distribution {
 
     def sample(implicit randomness: Randomness): A =
       distribution.prepare.apply()
+
+    def condition(likelihood: Likelihood[A]): Conditioned[A] =
+      Conditioned(OneAnd(likelihood, List.empty), distribution)
   }
 }
